@@ -23,7 +23,7 @@ repo](https://github.com/theupdateframework/specification/issues).
 - [F. Future Directions and Open Questions](#f-future-directions-and-open-questions)
 
 ## **1. Introduction**
-* **1.1. Scope**
+* ### 1.1. Scope
 
    This document describes a framework for securing software update systems.
 
@@ -31,7 +31,7 @@ repo](https://github.com/theupdateframework/specification/issues).
    "SHOULD NOT," "RECOMMENDED," "MAY," and "OPTIONAL" in this document are to be
    interpreted as described in [RFC 2119](https://tools.ietf.org/html/rfc2119).
 
-* **1.2. Motivation**
+* ### 1.2. Motivation
 
    Software is commonly updated through software update systems.  These systems
    can be package managers that are responsible for all of the software that is
@@ -49,7 +49,7 @@ repo](https://github.com/theupdateframework/specification/issues).
    Software update systems are vulnerable to a variety of known attacks.  This
    is generally true even for implementations that have tried to be secure.
 
-* **1.3. History and credit**
+* ### 1.3. History and credit
 
    Work on TUF began in late 2009.  The core ideas are based off of previous
    work done by Justin Cappos and Justin Samuel that [identified security flaws
@@ -75,7 +75,7 @@ repo](https://github.com/theupdateframework/specification/issues).
    work of Nick Mathewson, Sebastian Hahn, Roger Dingledine, Martin Peck, and
    others.
 
- * **1.4. Non-goals**
+ * ### 1.4. Non-goals
 
    We are not creating a universal update system, but rather a simple and
    flexible way that applications can have high levels of security with their
@@ -101,7 +101,7 @@ repo](https://github.com/theupdateframework/specification/issues).
    require security decisions which are situation-specific.  How those errors
    are handled is up to the software update system.
 
-* **1.5. Goals**
+* ### 1.5. Goals
 
    We need to provide a framework (a set of libraries, file formats, and
    utilities) that can be used to secure new and existing software update
@@ -125,7 +125,7 @@ repo](https://github.com/theupdateframework/specification/issues).
 
    The framework must be easy to integrate with software update systems.
 
-   - **1.5.1 Goals for implementation**
+   - #### 1.5.1 Goals for implementation
 
       + The client side of the framework must be straightforward to implement in any
    programming language and for any platform with the requisite networking and
@@ -138,7 +138,7 @@ repo](https://github.com/theupdateframework/specification/issues).
    SSL (TLS).  This does not exclude the optional use of SSL when available,
    but the framework will be designed without it.
 
-   - **1.5.2. Goals to protect against specific attacks**
+   - #### 1.5.2. Goals to protect against specific attacks
 
       Note: When saying the framework protects against an attack, it means the
       attack will be unsuccessful.  It does not mean that a client will always
@@ -193,7 +193,7 @@ repo](https://github.com/theupdateframework/specification/issues).
       + **Wrong software installation.**  An attacker cannot provide a file
       (trusted or untrusted) that is not the one the client wanted.
 
-   - **1.5.3. Goals for PKIs**
+   - #### 1.5.3. Goals for PKIs
 
       * Software update systems using the framework's client code interface should
       never have to directly manage keys.
@@ -207,7 +207,7 @@ repo](https://github.com/theupdateframework/specification/issues).
       * The root of trust must not rely on external PKI.  That is, no authority will
       be derived from keys outside of the framework.
 
-    - **1.5.4. TUF Augmentation Proposal support**
+    - #### 1.5.4. TUF Augmentation Proposal support
 
       * This version (1.0.0) of the specification adheres to the following TAPS:
 
@@ -261,7 +261,7 @@ repo](https://github.com/theupdateframework/specification/issues).
             this point, the application has securely obtained the target file
             and can do with it whatever it wishes.
 
-* **2.1. Roles and PKI**
+* ### 2.1. Roles and PKI
 
    In the discussion of roles that follows, it is important to remember that
    the framework has been designed to allow a large amount of flexibility for
@@ -282,7 +282,7 @@ repo](https://github.com/theupdateframework/specification/issues).
    All roles can use one or more keys and require a threshold of signatures of
    the role's keys in order to trust a given metadata file.
 
-  - **2.1.1. Root Role**
+  - #### 2.1.1. Root Role
 
       + The root role delegates trust to specific keys trusted for all other
    top-level roles used in the system.
@@ -303,7 +303,7 @@ repo](https://github.com/theupdateframework/specification/issues).
    important because safely recovering from it is nearly impossible.
 
 
-  - **2.1.2 Targets role**
+  - #### 2.1.2 Targets role
 
       The targets role's signature indicates which target files are trusted by
       clients.  The targets role signs metadata that describes these files, not
@@ -325,7 +325,7 @@ repo](https://github.com/theupdateframework/specification/issues).
       Any delegation can be revoked at any time: the delegating role needs only
   to sign new metadata that no longer contains that delegation.
 
-  - **2.1.3 Snapshot role**
+  - #### 2.1.3 Snapshot role
 
       The snapshot role signs a metadata file that provides information about
       the latest version of all targets metadata on the repository
@@ -333,7 +333,7 @@ repo](https://github.com/theupdateframework/specification/issues).
       clients to know which metadata files have been updated and also prevents
       mix-and-match attacks.
 
-  - **2.1.4 Timestamp role**
+  - #### 2.1.4 Timestamp role
 
       To prevent an adversary from replaying an out-of-date signed metadata file
       whose signature has not yet expired, an automated process periodically signs
@@ -341,7 +341,7 @@ repo](https://github.com/theupdateframework/specification/issues).
       though this timestamp key must be kept online, the risk posed to clients by
       the compromise of this key is minimal.
 
-  - **2.1.5 Mirrors role**
+  - #### 2.1.5 Mirrors role
 
       Every repository has one or more mirrors from which files can be downloaded
       by clients.  A software update system using the framework may choose to
@@ -353,7 +353,7 @@ repo](https://github.com/theupdateframework/specification/issues).
       security from being tricked into contacting the wrong mirrors.  This is
       because the framework has very little trust in repositories.
 
-* **2.2. Threat Model And Analysis**
+* ### 2.2. Threat Model And Analysis
 
    We assume an adversary who can respond to client requests, whether by acting
    as a man-in-the-middle or through compromising repository mirrors.  At
@@ -391,21 +391,21 @@ repo](https://github.com/theupdateframework/specification/issues).
    It is up to the application to determine the significance of the same or
    different target files provided from separate repositories.
 
-* **3.1 Repository layout**
+* ### 3.1 Repository layout
 
    The filesystem layout in the repository is used for two purposes:
      - To give mirrors an easy way to mirror only some of the repository.
      - To specify which parts of the repository a given role has authority
        to sign/provide.
 
- + **3.1.1 Target files**
+ + #### 3.1.1 Target files
 
    The filenames and the directory structure of target files available from
    a repository are not specified by the framework.  The names of these files
    and directories are completely at the discretion of the application using
    the framework.
 
- + **3.1.2 Metadata files**
+ + #### 3.1.2 Metadata files
 
    The filenames and directory structure of repository metadata are strictly
    defined.  All metadata filenames will have an extension (EXT) based on the
@@ -442,7 +442,7 @@ repo](https://github.com/theupdateframework/specification/issues).
          Signed by the mirrors role's keys.  Lists information about available
          mirrors and the content available from each mirror.
 
-  + **3.1.2.1 Metadata files for targets delegation**
+  + #### 3.1.2.1 Metadata files for targets delegation
 
    When the targets role delegates trust to other roles, each delegated role
    provides one signed metadata file.  As is the case with the directory
@@ -469,7 +469,7 @@ repo](https://github.com/theupdateframework/specification/issues).
    a backwards incompatible format change is needed, a new filename can
    be used.
 
-* **4.1. Metaformat**
+* ### 4.1. Metaformat
 
    Implementers of TUF may use any data format for metadata files as long as
    all fields in this specification are included and TUF clients are able to
@@ -481,7 +481,7 @@ repo](https://github.com/theupdateframework/specification/issues).
    object, we use the "canonical JSON" subdialect as described at
         http://wiki.laptop.org/go/Canonical_JSON
 
-* **4.2. File formats: general principles**
+* ### 4.2. File formats: general principles
 
    All signed metadata objects have the format:
 
@@ -580,7 +580,7 @@ repo](https://github.com/theupdateframework/specification/issues).
    zero UTC offset.  An example date-time string is "1985-10-21T01:21:00Z".
 
 
-* **4.3. File formats: root.json**
+* ### 4.3. File formats: root.json
 
    The root.json file is signed by the root role's keys.  It indicates
    which keys are authorized for all top-level roles, including the root
@@ -713,7 +713,7 @@ repo](https://github.com/theupdateframework/specification/issues).
        }
       }
 
-* **4.4. File formats: snapshot.json**
+* ### 4.4. File formats: snapshot.json
 
    The snapshot.json file is signed by the snapshot role. It MUST list the
    version numbers of the top-level targets metadata and all delegated targets
@@ -792,7 +792,7 @@ repo](https://github.com/theupdateframework/specification/issues).
         }
        }
 
-* **4.5. File formats: targets.json and delegated target roles**
+* ### 4.5. File formats: targets.json and delegated target roles
 
    The "signed" portion of targets.json is as follows:
 
@@ -972,7 +972,7 @@ repo](https://github.com/theupdateframework/specification/issues).
         }
        }
 
-* **4.6. File formats: timestamp.json**
+* ### 4.6. File formats: timestamp.json
 
    The timestamp file is signed by a timestamp key.  It indicates the latest
    version of the snapshot metadata and is frequently re-signed to limit the
@@ -1024,7 +1024,7 @@ repo](https://github.com/theupdateframework/specification/issues).
         }
        }
 
-* **4.7. File formats: mirrors.json**
+* ### 4.7. File formats: mirrors.json
 
    The mirrors.json file is signed by the mirrors role.  It indicates which
    mirrors are active and believed to be mirroring specific parts of the
