@@ -1092,7 +1092,7 @@ repo](https://github.com/theupdateframework/specification/issues).
   * #### **5.1.1**. Let N denote the version number of the trusted root metadata file.
 
   * #### **5.1.2**. **Try downloading version N+1 of the root metadata file**,
-    up to
+      up to
   some W number of bytes (because the size is unknown). The value for W is set
   by the authors of the application using TUF. For example, W may be tens of
   kilobytes. The filename used to download the root metadata file is of the
