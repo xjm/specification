@@ -1080,7 +1080,8 @@ repo](https://github.com/theupdateframework/specification/issues).
   trusted root metadata file does not matter, because we will attempt to update
   it in the next step.
 
- ### **5.1**. **Update the root metadata file.** Since it may now be signed using
+ ### **5.1**. **Update the root metadata file.**
+  Since it may now be signed using
   entirely different keys, the client MUST somehow be able to establish a
   trusted line of continuity to the latest set of keys (see Section 6.1). To do
   so, the client MUST download intermediate root metadata files, until the
@@ -1088,10 +1089,10 @@ repo](https://github.com/theupdateframework/specification/issues).
   consistent snapshots in order to download _versioned_ root metadata files as
   described next.
 
-  * #### **5.1.1**. Let N denote the version number of the trusted root metadata
-  file.
+  * #### **5.1.1**. Let N denote the version number of the trusted root metadata file.
 
-  * #### **5.1.2**. **Try downloading version N+1 of the root metadata file**, up to
+  * #### **5.1.2**. **Try downloading version N+1 of the root metadata file**,
+  up to
   some W number of bytes (because the size is unknown). The value for W is set
   by the authors of the application using TUF. For example, W may be tens of
   kilobytes. The filename used to download the root metadata file is of the
