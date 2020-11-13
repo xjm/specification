@@ -398,14 +398,14 @@ repo](https://github.com/theupdateframework/specification/issues).
      - To specify which parts of the repository a given role has authority
        to sign/provide.
 
- +### **3.1.1 Target files**
+ + ### **3.1.1 Target files**
 
    The filenames and the directory structure of target files available from
    a repository are not specified by the framework.  The names of these files
    and directories are completely at the discretion of the application using
    the framework.
 
- +### **3.1.2 Metadata files**
+ + ### **3.1.2 Metadata files**
 
    The filenames and directory structure of repository metadata are strictly
    defined.  All metadata filenames will have an extension (EXT) based on the
