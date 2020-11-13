@@ -1073,7 +1073,8 @@ repo](https://github.com/theupdateframework/specification/issues).
   still be able to update again in the future. Errors raised during the update
   process should not leave clients in an unrecoverable state.
 
- ### **5.0**. **Load the trusted root metadata file.** We assume that a good,
+ ### **5.0**. **Load the trusted root metadata file.**
+  We assume that a good,
   trusted copy of this file was shipped with the package manager or software
   updater using an out-of-band process.  Note that the expiration of the
   trusted root metadata file does not matter, because we will attempt to update
