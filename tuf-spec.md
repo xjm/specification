@@ -1121,7 +1121,8 @@ repo](https://github.com/theupdateframework/specification/issues).
   rollback attack.  On the next update cycle, begin at step 5.0 and version N
   of the root metadata file.
 
-  * #### **5.1.5**. Note that the expiration of the new (intermediate) root metadata
+  * #### **5.1.5**.
+      Note that the expiration of the new (intermediate) root metadata
   file does not matter yet, because we will check for it in step 5.1.9.
 
   * #### **5.1.6**. **Set the trusted root metadata file**
@@ -1140,8 +1141,8 @@ repo](https://github.com/theupdateframework/specification/issues).
   cycle, report the potential freeze attack.  On the next update cycle, begin
   at step 5.0 and version N of the root metadata file.
 
-  * #### **5.1.10**. **If the timestamp and / or snapshot keys have been rotated,
-  then delete the trusted timestamp and snapshot metadata files.** This is done
+  * #### **5.1.10**. **If the timestamp and / or snapshot keys have been rotated, then delete the trusted timestamp and snapshot metadata files.**
+      This is done
   in order to recover from fast-forward attacks after the repository has been
   compromised and recovered. A _fast-forward attack_ happens when attackers
   arbitrarily increase the version numbers of: (1) the timestamp metadata, (2)
@@ -1204,25 +1205,29 @@ of the form VERSION_NUMBER.FILENAME.EXT (e.g., 42.snapshot.json), where
 VERSION_NUMBER is the version number of the snapshot metadata file listed in
 the timestamp metadata file.
 
-  * ### **5.3.1**. **Check against timestamp role's snapshot hash.** The hashes
+  * ### **5.3.1**. **Check against timestamp role's snapshot hash.**
+    The hashes
   of the new snapshot metadata file MUST match the hashes, if any, listed in
   the trusted timestamp metadata.  This is done, in part, to prevent a
   mix-and-match attack by man-in-the-middle attackers.  If the hashes do not
   match, discard the new snapshot metadata, abort the update cycle, and report
   the failure.
 
-  * ### **5.3.2**. **Check for an arbitrary software attack.** The new snapshot
+  * ### **5.3.2**. **Check for an arbitrary software attack.**
+    The new snapshot
   metadata file MUST have been signed by a threshold of keys specified in the
   trusted root metadata file.  If the new snapshot metadata file is not signed
   as required, discard it, abort the update cycle, and report the signature
   failure.
 
-  * ### **5.3.3**. **Check against timestamp role's snapshot version.** The version
+  * ### **5.3.3**. **Check against timestamp role's snapshot version.**
+    The version
   number of the new snapshot metadata file MUST match the version number listed
   in the trusted timestamp metadata.  If the versions do not match, discard the
   new snapshot metadata, abort the update cycle, and report the failure.
 
-  * ### **5.3.4**. **Check for a rollback attack.** The version number of the targets
+  * ### **5.3.4**. **Check for a rollback attack.**
+    The version number of the targets
   metadata file, and all delegated targets metadata files, if any, in the
   trusted snapshot metadata file, if any, MUST be less than or equal to its
   version number in the new snapshot metadata file. Furthermore, any targets
@@ -1231,17 +1236,20 @@ the timestamp metadata file.
   these conditions are not met, discard the new snapshot metadata file, abort
   the update cycle, and report the failure.
 
-  * ### **5.3.5**. **Check for a freeze attack.** The latest known time MUST be
+  * ### **5.3.5**. **Check for a freeze attack.**
+    The latest known time MUST be
   lower than the expiration timestamp in the new snapshot metadata file.  If
   so, the new snapshot metadata file becomes the trusted snapshot metadata
   file. If the new snapshot metadata file is expired, discard it, abort the
   update cycle, and report the potential freeze attack.
 
 
-  * ### **5.3.6**. **Persist snapshot metadata.** The client MUST write the file to
+  * ### **5.3.6**. **Persist snapshot metadata.**
+    The client MUST write the file to
   non-volatile storage as FILENAME.EXT (e.g. snapshot.json).
 
-## **5.4**. **Download the top-level targets metadata file**, up to either the
+## **5.4**. **Download the top-level targets metadata file**,
+   up to either the
 number of bytes specified in the snapshot metadata file, or some Z number of
 bytes. The value for Z is set by the authors of the application using TUF. For
 example, Z may be tens of kilobytes.  If consistent snapshots are not used (see
