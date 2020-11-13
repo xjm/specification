@@ -1259,66 +1259,78 @@ of the form VERSION_NUMBER.FILENAME.EXT (e.g., 42.targets.json), where
 VERSION_NUMBER is the version number of the targets metadata file listed in the
 snapshot metadata file.
 
-  * ### **5.4.1**. **Check against snapshot role's targets hash.** The hashes
+  * ### **5.4.1**. **Check against snapshot role's targets hash.**
+    The hashes
   of the new targets metadata file MUST match the hashes, if any, listed in the
   trusted snapshot metadata.  This is done, in part, to prevent a mix-and-match
   attack by man-in-the-middle attackers.  If the new targets metadata file does
   not match, discard the new target metadata, abort the update cycle, and
   report the failure.
 
-  * ### **5.4.2**. **Check for an arbitrary software attack.** The new targets
+  * ### **5.4.2**. **Check for an arbitrary software attack.**
+    The new targets
   metadata file MUST have been signed by a threshold of keys specified in the
   trusted root metadata file.  If the new targets metadata file is not signed
   as required, discard it, abort the update cycle, and report the failure.
 
-  * ### **5.4.3**. **Check against snapshot role's targets version.** The version
+  * ### **5.4.3**. **Check against snapshot role's targets version.**
+    The version
   number of the new targets metadata file MUST match the version number listed
   in the trusted snapshot metadata.  If the versions do not match, discard it,
   abort the update cycle, and report the failure.
 
-  * ### **5.4.4**. **Check for a freeze attack.** The latest known time MUST be
+  * ### **5.4.4**. **Check for a freeze attack.**
+    The latest known time MUST be
   lower than the expiration timestamp in the new targets metadata file.  If so,
   the new targets metadata file becomes the trusted targets metadata file.  If
   the new targets metadata file is expired, discard it, abort the update cycle,
   and report the potential freeze attack.
 
-  * ### **5.4.5**. **Persist targets metadata.** The client MUST write the file to
+  * ### **5.4.5**. **Persist targets metadata.**
+    The client MUST write the file to
   non-volatile storage as FILENAME.EXT (e.g. targets.json).
 
-  * ### **5.4.6**. **Perform a pre-order depth-first search for metadata about the
-  desired target, beginning with the top-level targets role.**  Note: If
+  * ### **5.4.6**. **Perform a pre-order depth-first search for metadata about the desired target, beginning with the top-level targets role.**
+    Note: If
   any metadata requested in steps 5.4.6.1 - 5.4.6.2 cannot be downloaded nor
   validated, end the search and report that the target cannot be found.
 
-    * #### **5.4.6.1**. If this role has been visited before, then skip this role
+    * #### **5.4.6.1**.
+       If this role has been visited before, then skip this role
     (so that cycles in the delegation graph are avoided).  Otherwise, if an
     application-specific maximum number of roles have been visited, then go to
     step 5.5 (so that attackers cannot cause the client to waste excessive
     bandwidth or time).  Otherwise, if this role contains metadata about the
     desired target, then go to step 5.5.
 
-    * #### **5.4.6.2**. Otherwise, recursively search the list of delegations in
+    * #### **5.4.6.2**.
+      Otherwise, recursively search the list of delegations in
     order of appearance.
 
-      * ##### **5.4.6.2.1**. If the current delegation is a multi-role delegation,
+      * ##### **5.4.6.2.1**.
+        If the current delegation is a multi-role delegation,
       recursively visit each role, and check that each has signed exactly the
       same non-custom metadata (i.e., length and hashes) about the target (or
       the lack of any such metadata).
 
-      * ##### **5.4.6.2.2**. If the current delegation is a terminating delegation,
+      * ##### **5.4.6.2.2**.
+        If the current delegation is a terminating delegation,
       then jump to step 5.5.
 
-      *  ##### **5.4.6.2.3**. Otherwise, if the current delegation is a
+      *  ##### **5.4.6.2.3**.
+         Otherwise, if the current delegation is a
       non-terminating delegation, continue processing the next delegation, if
       any. Stop the search, and jump to step 5.5 as soon as a delegation
       returns a result.
 
 ## **5.5**. **Verify the desired target against its targets metadata**.
 
-  * ### **5.5.1**. If there is no targets metadata about this target, abort the
+  * ### **5.5.1**.
+    If there is no targets metadata about this target, abort the
   update cycle and report that there is no such target.
 
-  * ### **5.5.2**. Otherwise, download the target (up to the number of bytes
+  * ### **5.5.2**.
+     Otherwise, download the target (up to the number of bytes
   specified in the targets metadata), and verify that its hashes match the
   targets metadata. (We download up to this number of bytes, because in some
   cases, the exact number is unknown. This may happen, for example, if an
