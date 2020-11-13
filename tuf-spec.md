@@ -1102,7 +1102,8 @@ repo](https://github.com/theupdateframework/specification/issues).
   The value for Y is set by the authors of the application using TUF. For
   example, Y may be 2^10.
 
-  * #### **5.1.3. Check for an arbitrary software attack.** Version N+1 of the root
+  * #### **5.1.3. Check for an arbitrary software attack.**
+      Version N+1 of the root
   metadata file MUST have been signed by: (1) a threshold of keys specified in
   the trusted root metadata file (version N), and (2) a threshold of keys
   specified in the new root metadata file being validated (version N+1).  If
@@ -1110,7 +1111,8 @@ repo](https://github.com/theupdateframework/specification/issues).
   and report the signature failure.  On the next update cycle, begin at step
   5.0 and version N of the root metadata file.
 
-  * #### **5.1.4. Check for a rollback attack.** The version number of the trusted
+  * #### **5.1.4. Check for a rollback attack.**
+      The version number of the trusted
   root metadata file (version N) MUST be less than or equal to the version
   number of the new root metadata file (version N+1). Effectively, this means
   checking that the version number signed in the new root metadata file is
@@ -1122,15 +1124,17 @@ repo](https://github.com/theupdateframework/specification/issues).
   * #### **5.1.5**. Note that the expiration of the new (intermediate) root metadata
   file does not matter yet, because we will check for it in step 5.1.9.
 
-  * #### **5.1.6**. **Set the trusted root metadata file** to the new root metadata
-  file.
+  * #### **5.1.6**. **Set the trusted root metadata file**
+      to the new root metadata file.
 
-  * #### **5.1.7**. **Persist root metadata.** The client MUST write the file to
+  * #### **5.1.7**. **Persist root metadata.**
+      The client MUST write the file to
   non-volatile storage as FILENAME.EXT (e.g. root.json).
 
   * #### **5.1.8**. **Repeat steps 5.1.1 to 5.1.8**.
 
-  * #### **5.1.9**. **Check for a freeze attack.** The latest known time MUST be
+  * #### **5.1.9**. **Check for a freeze attack.**
+      The latest known time MUST be
   lower than the expiration timestamp in the trusted root metadata file
   (version N).  If the trusted root metadata file has expired, abort the update
   cycle, report the potential freeze attack.  On the next update cycle, begin
@@ -1149,13 +1153,15 @@ repo](https://github.com/theupdateframework/specification/issues).
   * #### **5.1.11**. **Set whether consistent snapshots are used as per the trusted
   root metadata file** (see Section 4.3).
 
-### **5.2**. **Download the timestamp metadata file**, up to X number of bytes
+### **5.2**. **Download the timestamp metadata file**,
+  up to X number of bytes
 (because the size is unknown). The value for X is set by the authors of the
 application using TUF. For example, X may be tens of kilobytes. The filename
 used to download the timestamp metadata file is of the fixed form FILENAME.EXT
 (e.g., timestamp.json).
 
-  * ### **5.2.1**. **Check for an arbitrary software attack.** The new timestamp
+  * ### **5.2.1**. **Check for an arbitrary software attack.**
+      The new timestamp
   metadata file MUST have been signed by a threshold of keys specified in the
   trusted root metadata file.  If the new timestamp metadata file is not
   properly signed, discard it, abort the update cycle, and report the signature
@@ -1163,27 +1169,32 @@ used to download the timestamp metadata file is of the fixed form FILENAME.EXT
 
   * ### **5.2.2**. **Check for a rollback attack.**
 
-    * #### **5.2.2.1**. The version number of the trusted timestamp metadata file, if
+    * #### **5.2.2.1**.
+      The version number of the trusted timestamp metadata file, if
     any, MUST be less than or equal to the version number of the new timestamp
     metadata file.  If the new timestamp metadata file is older than the
     trusted timestamp metadata file, discard it, abort the update cycle, and
     report the potential rollback attack.
 
-    * #### **5.2.2.2**. The version number of the snapshot metadata file in the
+    * #### **5.2.2.2**.
+       The version number of the snapshot metadata file in the
     trusted timestamp metadata file, if any, MUST be less than or equal to its
     version number in the new timestamp metadata file.  If not, discard the new
     timestamp metadata file, abort the update cycle, and report the failure.
 
-  * ###  **5.2.3**. **Check for a freeze attack.** The latest known time MUST be
+  * ###  **5.2.3**. **Check for a freeze attack.**
+      The latest known time MUST be
   lower than the expiration timestamp in the new timestamp metadata file.  If
   so, the new timestamp metadata file becomes the trusted timestamp metadata
   file.  If the new timestamp metadata file has expired, discard it, abort the
   update cycle, and report the potential freeze attack.
 
-  * ### **5.2.4**. **Persist timestamp metadata.** The client MUST write the file
+  * ### **5.2.4**. **Persist timestamp metadata.**
+    The client MUST write the file
   to non-volatile storage as FILENAME.EXT (e.g. timestamp.json).
 
-## **5.3**. **Download snapshot metadata file**, up to either the number of bytes
+## **5.3**. **Download snapshot metadata file**,
+  up to either the number of bytes
 specified in the timestamp metadata file, or some Y number of bytes. The value
 for Y is set by the authors of the application using TUF. For example, Y may be
 tens of kilobytes. If consistent snapshots are not used (see
